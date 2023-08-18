@@ -28,6 +28,7 @@ void FLinterContentBrowserExtensions::InstallHooks(FLinterModule* LinterModule, 
 			TSharedRef<FExtender> Extender = MakeShared<FExtender>();
 			Extender->AddMenuExtension(
 				"PathContextBulkOperations",
+
 				EExtensionHook::After,
 				TSharedPtr<FUICommandList>(),
 				FMenuExtensionDelegate::CreateStatic(&Local::ContentBrowserExtenderFunc, SelectedPaths)
@@ -68,7 +69,7 @@ void FLinterContentBrowserExtensions::InstallHooks(FLinterModule* LinterModule, 
 
 		static TSharedRef<FExtender> OnExtendAssetSelectionMenu(const TArray<FAssetData>& SelectedAssets)
 		{
-			TSharedRef<FExtender> Extender = MakeShared<FExtender>();
+			UE_LOG (LinterCommandlet, Display, TEXT ("OnExtendAssetSelectionMenu"));
 			Extender->AddMenuExtension(
 				"CommonAssetActions",
 				EExtensionHook::After,

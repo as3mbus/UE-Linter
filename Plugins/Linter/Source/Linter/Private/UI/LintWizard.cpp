@@ -3,7 +3,7 @@
 
 #include "CoreGlobals.h"
 #include "Delegates/Delegate.h"
-#include "AssetRegistryModule.h"
+#include "AssetRegistry/AssetRegistryModule.h"
 #include "IAssetRegistry.h"
 #include "AssetData.h"
 #include "SlateOptMacros.h"
@@ -72,7 +72,7 @@ void SLintWizard::Construct(const FArguments& InArgs)
 	[
 		SNew(SBorder)
 		.Padding(18)
-		.BorderImage(FEditorStyle::GetBrush("Docking.Tab.ContentAreaBrush"))
+		.BorderImage(FAppStyle::GetBrush("Docking.Tab.ContentAreaBrush"))
 		[
 			SNew(SVerticalBox)
 			+ SVerticalBox::Slot()
@@ -80,12 +80,12 @@ void SLintWizard::Construct(const FArguments& InArgs)
 				SAssignNew(MainWizard, SWizard)
 				.ShowPageList(false)
 				.ShowCancelButton(false)
-				.ButtonStyle(FEditorStyle::Get(), "FlatButton.Default")
-				.CancelButtonStyle(FEditorStyle::Get(), "FlatButton.Default")
-				.FinishButtonStyle(FEditorStyle::Get(), "FlatButton.Success")
-				.ButtonTextStyle(FEditorStyle::Get(), "LargeText")
+				.ButtonStyle(FAppStyle::Get(), "FlatButton.Default")
+				.CancelButtonStyle(FAppStyle::Get(), "FlatButton.Default")
+				.FinishButtonStyle(FAppStyle::Get(), "FlatButton.Success")
+				.ButtonTextStyle(FAppStyle::Get(), "LargeText")
 #if UE_VERSION_OLDER_THAN(5, 0, 0)
-				.ForegroundColor(FEditorStyle::Get().GetSlateColor("WhiteBrush"))
+				.ForegroundColor(FAppStyle::Get().GetSlateColor("WhiteBrush"))
 #endif
 				.CanFinish(true)
 				.FinishButtonText(LOCTEXT("FinishButtonText", "Close"))
@@ -107,7 +107,7 @@ void SLintWizard::Construct(const FArguments& InArgs)
 					.Padding(0)
 					[
 						SNew(STextBlock)
-						.TextStyle( FEditorStyle::Get(), "NewClassDialog.PageTitle" )
+						.TextStyle(FAppStyle::Get(), "NewClassDialog.PageTitle" )
 						.Text(LOCTEXT("LinterSelectionTitle", "Linter Rule Set Selection"))
 					]
 					// Title spacer
@@ -154,7 +154,7 @@ void SLintWizard::Construct(const FArguments& InArgs)
 					.Padding(0)
 					[
 						SNew(STextBlock)
-						.TextStyle( FEditorStyle::Get(), "NewClassDialog.PageTitle" )
+						.TextStyle(FAppStyle::Get(), "NewClassDialog.PageTitle" )
 						.Text(LOCTEXT("LinterReportTitle", "Lint Report"))
 					]
 					// Marketplace No Errors Required Text
@@ -195,7 +195,7 @@ void SLintWizard::Construct(const FArguments& InArgs)
 					.Padding(0)
 					[
 						SNew(STextBlock)
-						.TextStyle( FEditorStyle::Get(), "NewClassDialog.PageTitle" )
+						.TextStyle(FAppStyle::Get(), "NewClassDialog.PageTitle" )
 						.Text(LOCTEXT("MarketplaceInfoTitle", "Marketplace Recommendations"))
 					]
 					// Title spacer
@@ -218,11 +218,11 @@ void SLintWizard::Construct(const FArguments& InArgs)
 							.AutoHeight()
 							[
 								SNew(SBorder)
-								.BorderImage(FEditorStyle::GetBrush("NoBorder"))
+								.BorderImage(FAppStyle::GetBrush("NoBorder"))
 								.Padding(PaddingAmount)
 								[
 									SNew(SBorder)
-									.BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+									.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
 									.Padding(PaddingAmount)
 									[
 										SNew(SHorizontalBox)
@@ -284,7 +284,8 @@ void SLintWizard::Construct(const FArguments& InArgs)
 										TArray<FString> ObjectPaths;
 										for (const auto& Asset : AssetList)
 										{
-											ObjectPaths.Add(Asset.ObjectPath.ToString());
+											//ObjectPaths.Add(Asset.ObjectPath.ToString());
+											ObjectPaths.Add(Asset.GetSoftObjectPath().GetAssetPathString());
 										}
 
 										ScopedSlowTask.EnterProgressFrame(0.25f, LOCTEXT("Linter.FixUpRedirects.LoadingRedirectors", "Loading redirectors..."));
@@ -325,12 +326,12 @@ void SLintWizard::Construct(const FArguments& InArgs)
 							.Padding(PaddingAmount)
 							[
 								SNew(SBorder)
-								.BorderImage(FEditorStyle::GetBrush("NoBorder"))
+								.BorderImage(FAppStyle::GetBrush("NoBorder"))
 								.Padding(PaddingAmount)
 								.Visibility_Lambda([&](){ return (MapAssetDataList.Num() > 0) ? EVisibility::SelfHitTestInvisible : EVisibility::Collapsed; })
 								[
 									SNew(SBorder)
-									.BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+									.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
 									.Padding(PaddingAmount)
 									[
 										SNew(SVerticalBox)
@@ -432,11 +433,11 @@ void SLintWizard::Construct(const FArguments& InArgs)
 							[
 								SNew(SBorder)
 								.Visibility(EVisibility::Collapsed)
-								.BorderImage(FEditorStyle::GetBrush("NoBorder"))
+								.BorderImage(FAppStyle::GetBrush("NoBorder"))
 								.Padding(PaddingAmount)
 								[
 									SNew(SBorder)
-									.BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+									.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
 									.Padding(PaddingAmount)
 									[
 										SNew(SVerticalBox)
@@ -525,7 +526,7 @@ void SLintWizard::Construct(const FArguments& InArgs)
 																	FString CommandLine = FString::Printf(TEXT("ZipProjectUp %s -project=\"%s\" -install=\"%s\""), UATFlags, *ProjectPath, *FinalFileName);
 
 																	IUATHelperModule::Get().CreateUatTask(CommandLine, PlatformName, LOCTEXT("ZipTaskName", "Zipping Up Project"),
-																		LOCTEXT("ZipTaskShortName", "Zip Project Task"), FEditorStyle::GetBrush(TEXT("MainFrame.CookContent")));
+																		LOCTEXT("ZipTaskShortName", "Zip Project Task"), FAppStyle::GetBrush(TEXT("MainFrame.CookContent")));
 																}
 
 #if UE_VERSION_NEWER_THAN(4, 26, 0)

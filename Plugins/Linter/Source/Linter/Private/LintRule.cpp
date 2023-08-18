@@ -9,8 +9,8 @@
 #include "Modules/ModuleManager.h"
 #include "IAssetRegistry.h"
 #include "IAssetTools.h"
-#include "AssetRegistryModule.h"
 #include "Misc/EngineVersionComparison.h"
+#include "AssetRegistry/AssetRegistryModule.h"
 
 
 ULintRule::ULintRule(const FObjectInitializer& ObjectInitializer)

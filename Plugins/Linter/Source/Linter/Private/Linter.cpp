@@ -6,7 +6,7 @@
 #include "LevelEditor.h"
 #include "Widgets/Input/SButton.h"
 #include "Styling/SlateStyle.h"
-#include "AssetRegistryModule.h"
+#include "AssetRegistry/AssetRegistryModule.h"
 #include "IAssetRegistry.h"
 #include "AssetData.h"
 #include "ContentBrowserModule.h"

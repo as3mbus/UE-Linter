@@ -2,7 +2,7 @@
 
 #include "LinterCommandlet.h"
 #include "Editor.h"
-#include "AssetRegistryModule.h"
+#include "AssetRegistry/AssetRegistryModule.h"
 #include "AssetData.h"
 #include "Engine/ObjectLibrary.h"
 #include "Dom/JsonObject.h"

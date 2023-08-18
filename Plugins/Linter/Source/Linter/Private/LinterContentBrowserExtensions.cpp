@@ -27,7 +27,7 @@ void FLinterContentBrowserExtensions::InstallHooks(FLinterModule* LinterModule, 
 		{
 			TSharedRef<FExtender> Extender = MakeShared<FExtender>();
 			Extender->AddMenuExtension(
-				"PathContextSourceControl",
+				"PathContextBulkOperations",
 				EExtensionHook::After,
 				TSharedPtr<FUICommandList>(),
 				FMenuExtensionDelegate::CreateStatic(&Local::ContentBrowserExtenderFunc, SelectedPaths)
